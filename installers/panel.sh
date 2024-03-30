@@ -102,17 +102,6 @@ install_composer() {
   success "Composer installed!"
 }
 
-ptdl_dl() {
-  output "Downloading pterodactyl panel files .. "
-  cd /var/www/pterodactyl || exit
-
-  chmod -R 755 storage/* bootstrap/cache/
-
-  cp .env.example .env
-
-  success "Downloaded pterodactyl panel files!"
-}
-
 install_composer_deps() {
   output "Installing composer dependencies.."
   [ "$OS" == "rocky" ] || [ "$OS" == "almalinux" ] && export PATH=/usr/local/bin:$PATH
@@ -412,7 +401,6 @@ perform_install() {
   output "Starting installation.. this might take a while!"
   dep_install
   install_composer
-  ptdl_dl
   install_composer_deps
   create_db_user "$MYSQL_USER" "$MYSQL_PASSWORD"
   create_db "$MYSQL_DB" "$MYSQL_USER"
